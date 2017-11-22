@@ -1,0 +1,39 @@
+/* 어드민 페이지 */
+.x_content .boardPaging {
+	display: inline-block;
+	float: right;
+	margin: 5px 0 0px;
+	text-align: center;
+	border-radius: 5px;
+	background: #ebebeb;
+}
+.x_content .boardPaging span.on {
+	color: #34a853;
+}
+.x_content .boardPaging span {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	color: #666;
+	font-size: 12px;
+	font-weight: 600;
+	text-align: center;
+}
+.x_content .boardPaging span a {
+	color: #8a8a8a;
+}
+.x_content .boardPaging .disableBtnFirst,
+.x_content .boardPaging .btnFirst, 
+.x_content .boardPaging .disableBtnLast, 
+.x_content .boardPaging .btnLast {
+	width:50px;
+}
+
+#search_select {
+	float: right;
+	padding: 8px;
+	margin-right: 5px;
+	border-radius: 25px 25px 25px 25px;
+	border: 1px solid rgba(221, 226, 232, 0.49);
+}

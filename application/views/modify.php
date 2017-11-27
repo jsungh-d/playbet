@@ -104,7 +104,7 @@
 
             <?php if ($info->TYPE == 'Y') { ?>
                 <div class="label_time pb15">
-                    <h4><strong>동영상첨부</strong><span style="font-size:11px;"> (mp4, avi, wmv, mpg, mpeg 파일)</span></h4>
+                    <h4><strong>동영상첨부</strong><span style="font-size:11px;"> (mp4, avi, wmv, mpg, mpeg, mov)</span></h4>
                     <ul class="video_area_wrapper">
                         <?php if ($board_info->VIDEO) { ?>
                             <li>
@@ -475,17 +475,14 @@
                                 var file_kind = obj.value.lastIndexOf('.');
                                 var file_name = obj.value.substring(file_kind + 1, obj.length);
                                 var file_type = file_name.toLowerCase();
-                                var check_file_type = ['mp4', 'avi', 'wmv', 'mpg', 'mpeg'];
+                                var check_file_type = ['mp4', 'avi', 'wmv', 'mpg', 'mpeg', 'mov', 'MOV'];
                                 if (check_file_type.indexOf(file_type) == -1) {
-                                    alert('동영상 파일만 선택할 수 있습니다. (mp4, avi, wmv, mpg, mpeg)');
+                                    alert('동영상 파일만 선택할 수 있습니다. (mp4, avi, wmv, mpg, mpeg, mov)');
                                     var parent_Obj = obj.parentNode
                                     var node = parent_Obj.replaceChild(obj.cloneNode(true), obj);
                                     $("input[type='file']").val("");
                                     return false;
                                 }
-                            }
-
-                            function chk_file_size(obj) {
                                 var fileSize = obj.files[0].size;
                                 var maxSize = 102400 * 102400;
                                 if (fileSize > maxSize) {
@@ -493,5 +490,14 @@
                                     $("input[type='file']").val("");
                                     return false;
                                 }
+                            }
+
+                            function chk_file_size(obj) {
+                                
+//                                if (fileSize > maxSize) {
+//                                    alert("파일용량은 100MB까지 가능합니다.");
+//                                    $("input[type='file']").val("");
+//                                    return false;
+//                                }
                             }
 </script>

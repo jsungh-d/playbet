@@ -690,7 +690,7 @@ class DataFunction extends CI_Controller {
             $url_path = "/boardUpFile/video";
             $upload_config = Array(
                 'upload_path' => $_SERVER['DOCUMENT_ROOT'] . $url_path,
-                'allowed_types' => 'mp4|avi|wmv|mpg|mpeg',
+                'allowed_types' => 'mp4|avi|wmv|mpg|mpeg|mov|MOV',
                 'encrypt_name' => TRUE,
                 'max_size' => '102400'
             );

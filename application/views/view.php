@@ -128,11 +128,11 @@
                     <label class="align_custom_div">
                         <h4><strong>첨부 영상</strong></h4>
                         <div class="video_area video_area_page" onclick="openVideoView();">
-                            <video class="main_video" width="100%" height="200px">
+                            <video class="main_video" width="100%">
                                 <source src="<?= $info->VIDEO ?>" type="video/mp4"/>
                             </video>
                             <img class="video_modal_btn" src="/images/common/icon_play.png" alt="동영상 보기">
-                            <div class="overlay_black" ></div>
+                            <!--<div class="overlay_black" ></div>-->
                         </div>
                     </label>
                 <?php } ?>

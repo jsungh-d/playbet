@@ -491,7 +491,7 @@ function chk_file_type_video(obj) {
     var file_type = file_name.toLowerCase();
     var check_file_type = ['mp4', 'avi', 'wmv', 'mpg', 'mpeg'];
     if (check_file_type.indexOf(file_type) == -1) {
-        alert('동영상 파일만 선택할 수 있습니다.');
+        alert('동영상 파일만 선택할 수 있습니다. (mp4, avi, wmv, mpg, mpeg)');
         var parent_Obj = obj.parentNode
         var node = parent_Obj.replaceChild(obj.cloneNode(true), obj);
         $("input[type='file']").val("");

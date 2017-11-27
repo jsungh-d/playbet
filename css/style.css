@@ -1131,3 +1131,7 @@
     background: rgba(0,0,0,0.1);
     z-index: 1;
 }
+.video_area_page {
+    max-height: 250px;
+    overflow:hidden;
+}

@@ -3,6 +3,20 @@
         <div class="title_left">
             <h3>프리미엄 신청 관리</h3>
         </div>
+        <div class="title_right">
+            <div class="col-md-10 col-sm-10 col-xs-12 form-group pull-right top_search">
+                <div class="input-group" style="width:60%; float:right;">
+                    <input type="text" class="form-control" id="search_text" placeholder="Search for..." value="" style="display:inline-block;">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" id="search_btn" type="button">Go!</button>
+                    </span>
+                </div>
+                <select id="search_select" style="">
+                    <option value="name">이름</option>
+                    <option value="phone">연락처</option>
+                </select>
+            </div>
+        </div>
     </div>
 
     <div class="clearfix"></div>
@@ -57,7 +71,7 @@
                                             <a><?= $row['PRICE'] ?></a>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-default ok_btn" value="<?= $row['MEMBER_IDX'] ?>" data-bind="<?= $row['PREMIUM_MONTH'] ?>">완료하기</button>
+                                            <button type="button" class="btn btn-default ok_btn" value="<?= $row['MEMBER_IDX'] ?>" data-bind="<?= $row['PREMIUM_MONTH'] ?>">승인하기</button>
                                         </td>
                                         <td>
                                             <a><?= $row['PREMIUM_DATE'] ?></a>
@@ -97,6 +111,38 @@
                 });
             } else {
                 return false;
+            }
+        });
+        
+        $("#search_text").keydown(function (key) {
+            var gubun = $("#search_select").val();
+            var text = $("#search_text").val();
+
+            if (!$.trim(text)) {
+                text = 'none';
+            }
+
+            if (key.keyCode == 13) {
+                if (text !== 'none') {
+                    location.href = '/admin/premium/q/gubun/' + gubun + '/text/' + text;
+                } else {
+                    location.href = '/admin/premium';
+                }
+            }
+        });
+
+        $("#search_btn").click(function () {
+            var gubun = $("#search_select").val();
+            var text = $("#search_text").val();
+
+            if (!$.trim(text)) {
+                text = 'none';
+            }
+
+            if (text !== 'none') {
+                location.href = '/admin/premium/q/gubun/' + gubun + '/text/' + text;
+            } else {
+                location.href = '/admin/premium';
             }
         });
     });

@@ -270,6 +270,11 @@
                 location.href = '/?page=0&category=' + category_idx + '&text=' + search_keyword + '';
             }
 
+            function locationSearchArea(search_keyword) {
+
+                location.href = '/?page=0&category=1&text=' + search_keyword + '';
+            }
+
             function subCategorySearch(category_sub_idx, category_pidx) {
 
                 location.href = '/?page=0&category=' + category_pidx + '&text=none&category_sub=' + category_sub_idx + '';

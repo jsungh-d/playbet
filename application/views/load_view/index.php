@@ -7,7 +7,7 @@
                 <a style="cursor: default;"><?= $row['BUSINESS_NAME'] ?></a>
                 > 
                 <?php if ($row['CATEGORY_TYPE'] == 'AREA') { ?>
-                    <a onclick="locationSearch('<?= $row['SIGUNGU'] ?>');"><?= $row['LOCATION'] ?></a>
+                    <a onclick="locationSearchArea('<?= $row['SIGUNGU'] ?>');"><?= $row['LOCATION'] ?></a>
                 <?php } else { ?>
                     <!--<a onclick="subCategorySearch('<?= $row['CATEGORY_IDX'] ?>', '<?= $row['CATEGORY_PNUM'] ?>');"><?= $row['CATEGORY_TYPE'] ?></a>-->
                     <a onclick="locationSearch('<?= $row['CATEGORY_TYPE'] ?>');"><?= $row['CATEGORY_TYPE'] ?></a>

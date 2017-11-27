@@ -475,7 +475,7 @@ class Index extends CI_Controller {
             exit;
         }
 
-        if ($data['info']->TYPE === 'N') {
+        if ($data['info']->TYPE === 'N' || $data['info']->TYPE === 'I') {
             // if ($write_cnt->CNT > 0) {
             //     alert('무료회원은 글작성후 30일후 작성 가능합니다.', '/index/premium');
             //     exit;

@@ -297,7 +297,7 @@ class DataFunction extends CI_Controller {
             $start = 0;
             $limit = $perPage;
         }
-        
+
 //        IF(
 //                        (SELECT 
 //                            PNUM 
@@ -743,7 +743,7 @@ class DataFunction extends CI_Controller {
         }
         $this->Db_m->insMultiData('ITEM', $insItemArray, 'PLAYBAT');
 
-           
+
 
         if (@$_FILES['file']) {
 
@@ -855,7 +855,7 @@ class DataFunction extends CI_Controller {
             $file['video'] = '';
         }
 
-        if($this->input->post('video_location', true)){
+        if ($this->input->post('video_location', true)) {
             $file['video'] = $this->input->post('video_location', true);
         }
 
@@ -2028,7 +2028,7 @@ class DataFunction extends CI_Controller {
                     <TD>$row[NAME]</TD>
                     <TD style='$number'>$row[II_DATE]</TD>
                 </TR>";
-                $i++;
+            $i++;
         }
         echo "</TR> 
             </TABLE>";
@@ -2063,4 +2063,19 @@ class DataFunction extends CI_Controller {
             echo $data;
         }
     }
+
+    function compBoard() {
+        $updateArray = array(
+            'COMP_YN' => 'Y'
+        );
+
+        $updateWhere = array(
+            'BOARD_IDX' => $this->input->post('board_idx', true)
+        );
+
+        $this->Db_m->update('BOARD', $updateArray, $updateWhere, 'PLAYBAT');
+
+        echo 'SUCCESS';
+    }
+
 }

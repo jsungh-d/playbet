@@ -265,6 +265,133 @@ class Admin extends CI_Controller {
     }
 
     function premium() {
+        
+        $add_where = "";
+        $data['gubun'] = "";
+        $data['text'] = "";
+
+        //검색어 초기화
+        $search_word = $page_url = '';
+        $uri_segment = 4;
+
+        //주소중에서 q(검색어) 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환 
+        $uri_array = $this->segment_explode($this->uri->uri_string());
+
+        if (in_array('q', $uri_array)) {
+            //주소에 검색어가 있을 경우의 처리. 즉 검색시 
+            $gubun = urldecode($this->url_explode($uri_array, 'gubun'));
+            $text = urldecode($this->url_explode($uri_array, 'text'));
+            //페이지네이션용 주소 
+            $page_url = '/q/gubun/' . $gubun . '/text/' . $text;
+            $uri_segment = 9;
+
+            if ($this->uri->segment(5) == 'name' && $this->uri->segment(7)) {
+                $add_where .= "AND NAME LIKE '%" . urldecode($this->uri->segment(7)) . "%'";
+                $data['gubun'] = $this->uri->segment(5);
+                $data['text'] = urldecode($this->uri->segment(7));
+            }
+
+            if ($this->uri->segment(5) == 'phone' && $this->uri->segment(7)) {
+                $add_where .= "AND PHONE LIKE '%" . urldecode($this->uri->segment(7)) . "%'";
+                $data['gubun'] = $this->uri->segment(5);
+                $data['text'] = urldecode($this->uri->segment(7));
+            }
+        }
+
+        //페이지네이션 라이브러리 로딩 추가
+        $this->load->library('pagination');
+
+        //페이지네이션 설정 '.$page_url.'
+        $config['base_url'] = '/admin/premium/' . $page_url . '/page/'; //페이징 주소
+        //게시물의 전체 갯수
+        $count_sql = "SELECT
+                            COUNT(*) CNT
+                          FROM
+                            MEMBER
+                          WHERE
+                            MEMBER_IDX <> '' ";
+        $count_sql .= $add_where;
+
+        $count_res = $this->Db_m->getInfo($count_sql, 'PLAYBAT');
+
+        $config['total_rows'] = $count_res->CNT;
+        $data['total_rows'] = $count_res->CNT;
+
+        $config['per_page'] = 15; //한 페이지에 표시할 게시물 수
+        $config['uri_segment'] = $uri_segment; //페이지 번호가 위치한 세그먼트
+        //$config['num_links'] = 2; //페이지 링크 갯수 설정
+        $config['use_fixed_page'] = TRUE;
+        $config['fixed_page_num'] = 10;
+
+        $config['display_first_always'] = TRUE;
+        $config['disable_first_link'] = TRUE;
+        $config['display_last_always'] = TRUE;
+        $config['disable_last_link'] = TRUE;
+        $config['display_prev_always'] = TRUE;
+        $config['display_next_always'] = TRUE;
+        $config['disable_prev_link'] = TRUE;
+        $config['disable_next_link'] = TRUE;
+
+        //페이지네이션 전체 감싸는 태그추가
+        $config['full_tag_open'] = '<div class="boardPaging">';
+        $config['full_tag_close'] = '</div>';
+
+        //항상나오는 처음으로 버튼 태그추가
+        $config['disabled_first_tag_open'] = "<span class='disableBtnFirst'>";
+        $config['disabled_first_tag_close'] = "</span>";
+
+        //처음으로버튼 감싸는 태그추가
+        $config['first_tag_open'] = '<span class="btnFirst">';
+        $config['first_tag_close'] = '</span>';
+
+        //항상나오는 마지막으로 버튼 태그추가
+        $config['disabled_last_tag_open'] = "<span class='disableBtnLast'>";
+        $config['disabled_last_tag_close'] = "</span>";
+
+        //마지막으로버튼 감싸는 태그추가
+        $config['last_tag_open'] = '<span class="btnLast">';
+        $config['last_tag_close'] = '</span>';
+
+        //항상나오는 다음버튼 감싸는 태그추가
+        $config['disabled_next_tag_open'] = '<span class="disableBtnNext">';
+        $config['disabled_next_tag_close'] = '</span>';
+
+        //다음버튼 감싸는 태그추가
+        $config['next_tag_open'] = '<span class="btnNext">';
+        $config['next_tag_close'] = '</span>';
+
+        //항상나오는 이전버튼 태그추가
+        $config['disabled_prev_tag_open'] = "<span class='disableBtnPrev'>";
+        $config['disabled_prev_tag_close'] = "</span>";
+
+        //이전버튼 감싸는 태그추가
+        $config['prev_tag_open'] = '<span class="btnPrev">';
+        $config['prev_tag_close'] = '</span>';
+
+        //현재페이지번호 감싸는 태그추가
+        $config['cur_tag_open'] = '<span class="on">';
+        $config['cur_tag_close'] = '</span>';
+
+        //페이지번호 감싸는 태그추가
+        $config['num_tag_open'] = '<span>';
+        $config['num_tag_close'] = '</span>';
+
+        //페이지네이션 초기화
+        $this->pagination->initialize($config);
+
+        //페이징 링크를 생성하여 view에서 사용할 변수에 할당
+        $data['pagination'] = $this->pagination->create_links();
+
+        //게시판 목록을 불러오기 위한 offset, limit 값 가져오기
+        $data['page'] = $page = $this->uri->segment($uri_segment, 1);
+
+        if ($page > 1) {
+            $start = (($page / $config['per_page'])) * $config['per_page'];
+        } else {
+            $start = ($page - 1) * $config['per_page'];
+        }
+
+        $limit = $config['per_page'];
 
         $sql = "SELECT
                     MEMBER_IDX,
@@ -283,9 +410,11 @@ class Admin extends CI_Controller {
                 FROM
                     MEMBER
                 WHERE
-                    TYPE = 'I'
-                    ORDER BY PREMIUM_DATE";
+                    TYPE = 'I'";
 
+        $sql .= $add_where;
+        $sql .= "ORDER BY PREMIUM_DATE DESC LIMIT $start, $limit";
+        
         $data['lists'] = $this->Db_m->getList($sql, 'PLAYBAT');
 
         $this->load->view('admin/premium', $data);

@@ -571,8 +571,15 @@
                 setTimeout(function () {
                     $("#imgView").parent(".blocker").css({"background-color": "rgba(0,0,0,1)", "padding": "0"});
                 }, 0);
+            }
+            
+            
+            function openVideoView() {
+                $("#videoView").modal();
 
-
+                setTimeout(function () {
+                    $("#videoView").parent(".blocker").css({"background-color": "rgba(0,0,0,1)", "padding": "0"});
+                }, 0);
             }
 
 

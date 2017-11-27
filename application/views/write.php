@@ -105,12 +105,12 @@
                         <div class="label_time">
                             <h4><strong><span class="red_star">*</span>사진첨부</strong><button type="button" class="blue_border_btn ml15 file_add_btn">추가</button></h4>
                             <ul class="attachment_ul">
-                                <li><input type="file" name="file[]" required></li>
+                                <li><input type="file" name="file[]" required onchange="chk_file_type_pm(this);"></li>
                             </ul>
                         </div>
                         <?php if( $info->TYPE =='Y') {?>
                         <div class="label_time pb15">
-                            <h4><strong>동영상첨부</strong></h4>
+                            <h4><strong>동영상첨부</strong><span style="font-size:11px;"> (mp4, avi, wmv, mpg, mpeg 파일)</span></h4>
                             <ul>
                                 <li><input type="file" name="video" accept="video/*" onchange="chk_file_type_video(this); chk_file_size(this);"></li>
                             </ul>

@@ -173,18 +173,19 @@
 }
 
 
-/* 이미지뷰 모달 */
+/* 이미지뷰, 비디오뷰 모달 */
 .imgView_img {
     width: 100%;
 }
-#imgView {
+#imgView,#videoView {
     position: static;
     padding: 0 !important;
     width: 100%;
     max-width: auto !important;
     background: #000;
 }
-#imgView .cancle_btn {
+#imgView .cancle_btn,
+#videoView .cancle_btn {
     position: absolute;
     top: 15px;
     left: 15px;
@@ -192,7 +193,8 @@
     z-index: 1000;
 }
 @media screen and (min-width: 550px) {
-    #imgView .cancle_btn {
+    #imgView .cancle_btn,
+    #videoView .cancle_btn {
         position: absolute;
         left: 50%;
         margin-left: -250px;

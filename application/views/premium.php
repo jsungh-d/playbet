@@ -36,7 +36,7 @@
                     <table>
                         <tr>
                             <td class="left_td"><h5>내기 딜 등록</h5></td>
-                            <td class="right_td"><h5>한 달에 한번</h5></td>
+                            <td class="right_td"><h5>딜 종료 7일 후</h5></td>
                         </tr>
                         <tr>
                             <td class="left_td"><h5>베팅 제한시간</h5></td>

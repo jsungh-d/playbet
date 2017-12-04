@@ -219,7 +219,8 @@
                             </div>
 
                         <?php } else if ($diff->invert > 0 && $row['ITEM_INFO_CNT'] == 0) { ?>
-                            <button type="button" class="link_btn_xxs" onclick="compBtn('<?= $row['BOARD_IDX'] ?>')" style="border:1px solid #c1c1c1; color:#c1c1c1;"><span>결과확인</span></button>
+                            <!--참여자 없음-->
+                            <button type="button" class="link_btn_xxs" onclick="compBtn('<?= $row['BOARD_IDX'] ?>')"><span>결과확인</span></button>
                         <?php } ?>
 
                         <?php if ($diff2->invert > 0) { ?>
@@ -378,415 +379,415 @@
 <script src="http://malsup.github.com/jquery.form.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript">
-                                $(document).ready(function () {
-                                    $(".betting_modal .cancle_btn").click(function () {
-                                        $(".close-modal").trigger("click");
-                                    });
+                        $(document).ready(function () {
+                            $(".betting_modal .cancle_btn").click(function () {
+                                $(".close-modal").trigger("click");
+                            });
 
-                                    // if($("#home_page").val().substr(0,4)!="http"){
-                                    //     var value = $("#home_page").val();
-                                    //     $("#home_page").val("http://"+value);
-                                    // };
+                            // if($("#home_page").val().substr(0,4)!="http"){
+                            //     var value = $("#home_page").val();
+                            //     $("#home_page").val("http://"+value);
+                            // };
 
-                                    $("#home_page").focus(function () {
-                                        if (!$.trim($(this).val())) {
-                                            $(this).val("http://");
-                                        }
-                                    });
+                            $("#home_page").focus(function () {
+                                if (!$.trim($(this).val())) {
+                                    $(this).val("http://");
+                                }
+                            });
 
 
-                                    if ($("#si").select().val()) {
-                                        var data = {si: $("#si").select().val(), infoVal: '<?= $info->SIGUNGU ?>'};
-                                        $.ajax({
-                                            dataType: 'text',
-                                            url: '/index.php/dataFunction/guLists',
-                                            data: data,
-                                            type: 'POST',
-                                            success: function (data, status, xhr) {
-                                                $("#gu").html(data);
-                                                $("#gugun").html('<option value="">선택</option>');
-                                            }
-                                        });
-
-                                        var data = {gu: '<?= $info->SIGUNGU ?>', infoVal: '<?= $info->ADDRESS_ORG_IDX ?>'};
-                                        $.ajax({
-                                            dataType: 'text',
-                                            url: '/index.php/dataFunction/gugunLists',
-                                            data: data,
-                                            type: 'POST',
-                                            success: function (data, status, xhr) {
-                                                $("#gugun").html(data);
-                                            }
-                                        });
+                            if ($("#si").select().val()) {
+                                var data = {si: $("#si").select().val(), infoVal: '<?= $info->SIGUNGU ?>'};
+                                $.ajax({
+                                    dataType: 'text',
+                                    url: '/index.php/dataFunction/guLists',
+                                    data: data,
+                                    type: 'POST',
+                                    success: function (data, status, xhr) {
+                                        $("#gu").html(data);
+                                        $("#gugun").html('<option value="">선택</option>');
                                     }
+                                });
+
+                                var data = {gu: '<?= $info->SIGUNGU ?>', infoVal: '<?= $info->ADDRESS_ORG_IDX ?>'};
+                                $.ajax({
+                                    dataType: 'text',
+                                    url: '/index.php/dataFunction/gugunLists',
+                                    data: data,
+                                    type: 'POST',
+                                    success: function (data, status, xhr) {
+                                        $("#gugun").html(data);
+                                    }
+                                });
+                            }
 
 
 
 
-                                    $("#si").change(function () {
-                                        if ($(this).select().val() == '') {
-                                            $("#gu").html('<option value="">선택</option>');
-                                            $("#gugun").html('<option value="">선택</option>');
-                                        }
-                                        var data = {si: $(this).select().val()};
-                                        $.ajax({
-                                            dataType: 'text',
-                                            url: '/index.php/dataFunction/guLists',
-                                            data: data,
-                                            type: 'POST',
-                                            success: function (data, status, xhr) {
-                                                $("#gu").html(data);
-                                                $("#gugun").html('<option value="">선택</option>');
-                                            }
-                                        });
-                                        $('#gu').focus();
-                                    });
+                            $("#si").change(function () {
+                                if ($(this).select().val() == '') {
+                                    $("#gu").html('<option value="">선택</option>');
+                                    $("#gugun").html('<option value="">선택</option>');
+                                }
+                                var data = {si: $(this).select().val()};
+                                $.ajax({
+                                    dataType: 'text',
+                                    url: '/index.php/dataFunction/guLists',
+                                    data: data,
+                                    type: 'POST',
+                                    success: function (data, status, xhr) {
+                                        $("#gu").html(data);
+                                        $("#gugun").html('<option value="">선택</option>');
+                                    }
+                                });
+                                $('#gu').focus();
+                            });
 
-                                    $("#gu").change(function () {
-                                        if ($(this).select().val() == '') {
-                                            $("#gugun").html('<option value="">선택</option>');
-                                        }
+                            $("#gu").change(function () {
+                                if ($(this).select().val() == '') {
+                                    $("#gugun").html('<option value="">선택</option>');
+                                }
 
-                                        var data = {gu: $(this).select().val()};
-                                        $.ajax({
-                                            dataType: 'text',
-                                            url: '/index.php/dataFunction/gugunLists',
-                                            data: data,
-                                            type: 'POST',
-                                            success: function (data, status, xhr) {
-                                                $("#gugun").html(data);
-                                            }
-                                        });
-                                        $("#gugun").focus();
-                                    });
+                                var data = {gu: $(this).select().val()};
+                                $.ajax({
+                                    dataType: 'text',
+                                    url: '/index.php/dataFunction/gugunLists',
+                                    data: data,
+                                    type: 'POST',
+                                    success: function (data, status, xhr) {
+                                        $("#gugun").html(data);
+                                    }
+                                });
+                                $("#gugun").focus();
+                            });
 
-                                    $("#gugun").change(function () {
-                                        $(".detail_addr").focus();
-                                    });
+                            $("#gugun").change(function () {
+                                $(".detail_addr").focus();
+                            });
 
 
-                                    $("#phone_auth_send_btn").click(function () {
-                                        var phone = $("#phone").val();
+                            $("#phone_auth_send_btn").click(function () {
+                                var phone = $("#phone").val();
 
-                                        var regNumber = /^[0-9]*$/;
+                                var regNumber = /^[0-9]*$/;
 
-                                        if (!regNumber.test(phone)) {
-                                            alert("연락처는 숫자만 입력 가능합니다.");
-                                            $("#phone").val('');
-                                            return false;
-                                        }
+                                if (!regNumber.test(phone)) {
+                                    alert("연락처는 숫자만 입력 가능합니다.");
+                                    $("#phone").val('');
+                                    return false;
+                                }
 
-                                        if (!$.trim(phone)) {
-                                            alert("연락처를 입력해주세요.");
-                                            $("#phone").val('');
-                                        } else {
-                                            var data = {phone: phone};
-                                            $.ajax({
-                                                dataType: 'text',
-                                                url: '/index.php/dataFunction/sendSms',
-                                                data: data,
-                                                type: 'POST',
-                                                success: function (data, status, xhr) {
-                                                    if (data == 'SUCCESS') {
-                                                        alert('인증번호가 전송 되었습니다.');
-                                                        $("#phone").attr('readonly', 'readonly');
-                                                        $('#phone_auth').focus();
-                                                        return false;
-                                                    }
-
-                                                    if (data == 'DUPLE') {
-                                                        alert('이미 인증된 번호입니다.');
-                                                        $("#phone").val('');
-                                                        return false;
-                                                    }
-
-                                                    if (data == 'FAILED') {
-                                                        alert('데이터 처리오류');
-                                                        return false;
-                                                    }
-                                                }
-                                            });
-                                        }
-
-                                    });
-
-                                    $("#phone_mod_btn").click(function () {
-                                        $(this).attr('id', 'phone_auth_send_btn');
-                                        $(this).html('인증번호 받기');
-                                        $('#phone').attr('readonly', false);
-                                        var html = '<label id="auth_area" class="align_custom_div">';
-                                        html += '<h4><strong>인증번호</strong></h4>';
-                                        html += '<div class="inline_input_div">';
-                                        html += '<input class="input_w100" type="text" id="phone_auth" name="" placeholder="ex) 123234">';
-                                        html += '<button type="button" id="phone_auth_chk_btn" class="underline_btn" style="margin:5px 0 15px 5px;">인증번호 확인</button>';
-                                        html += '</div>';
-                                        html += '</label>';
-
-                                        $("#auth_container").html(html);
-                                        $("#phone_auth_chk").val('N');
-
-                                        $("#phone_auth_send_btn").click(function () {
-                                            var phone = $("#phone").val();
-
-                                            var regNumber = /^[0-9]*$/;
-
-                                            if (!regNumber.test(phone)) {
-                                                alert("연락처는 숫자만 입력 가능합니다.");
-                                                $("#phone").val('');
-                                                return false;
-                                            }
-
-                                            if (!$.trim(phone)) {
-                                                alert("연락처를 입력해주세요.");
-                                                $("#phone").val('');
-                                            } else {
-                                                var data = {phone: phone};
-                                                $.ajax({
-                                                    dataType: 'text',
-                                                    url: '/index.php/dataFunction/sendSms',
-                                                    data: data,
-                                                    type: 'POST',
-                                                    success: function (data, status, xhr) {
-                                                        if (data == 'SUCCESS') {
-                                                            alert('인증번호가 전송 되었습니다.');
-                                                            $("#phone").attr('readonly', 'readonly');
-                                                            $('#phone_auth').focus();
-                                                            return false;
-                                                        }
-
-                                                        if (data == 'DUPLE') {
-                                                            alert('이미 인증된 번호입니다.');
-                                                            $("#phone").val('');
-                                                            return false;
-                                                        }
-
-                                                        if (data == 'FAILED') {
-                                                            alert('데이터 처리오류');
-                                                            return false;
-                                                        }
-                                                    }
-                                                });
-                                            }
-                                        });
-
-                                        //인증문자 비교 처리
-                                        $('#phone_auth_chk_btn').click(function () {
-                                            var phone = $("#phone").val();
-                                            var accessKey = $("#phone_auth").val();
-                                            var idx = $("#idx").val();
-
-                                            if (!accessKey) {
-                                                alert("인증번호를 입력해주세요.");
-                                                $("#phone_auth").focus();
-                                                return false;
-                                            }
-
-                                            if (!$.trim(phone)) {
-                                                alert("핸드폰 번호를 입력해주세요.");
-                                                return false;
-
-                                            } else {
-                                                var data = {phone: phone, accessKey: accessKey, idx: idx};
-                                                $.ajax({
-                                                    dataType: 'text',
-                                                    url: '/index.php/dataFunction/smsAccessChk',
-                                                    data: data,
-                                                    type: 'POST',
-                                                    success: function (data, status, xhr) {
-                                                        if (data == 'SUCCESS') {
-                                                            alert('인증 되었습니다.');
-                                                            $("#phone").attr('readonly', 'readonly');
-                                                            $('#phone_auth').attr('disabled', 'disabled');
-                                                            $("#phone_auth_send_btn").attr('disabled', 'disabled');
-                                                            $("#phone_auth_chk_btn").attr('disabled', 'disabled');
-                                                            $("#phone_auth_chk").val('Y');
-                                                            $("#phone_auth_send_btn").hide();
-                                                            $("#auth_area").hide();
-                                                            return false;
-                                                        }
-
-                                                        if (data == 'FAILED') {
-                                                            alert('인증번호가 일치하지 않습니다.');
-                                                            $("#phone_auth").val('');
-                                                            $("#phone_auth").focus();
-                                                            return false;
-                                                        }
-                                                    }
-
-                                                });
-                                            }
-                                        });
-                                    });
-
-                                    //인증문자 비교 처리
-                                    $('#phone_auth_chk_btn').click(function () {
-                                        var phone = $("#phone").val();
-                                        var accessKey = $("#phone_auth").val();
-                                        var idx = $("#idx").val();
-
-                                        if (!accessKey) {
-                                            alert("인증번호를 입력해주세요.");
-                                            $("#phone_auth").focus();
-                                            return false;
-                                        }
-
-                                        if (!$.trim(phone)) {
-                                            alert("핸드폰 번호를 입력해주세요.");
-                                            return false;
-
-                                        } else {
-                                            var data = {phone: phone, accessKey: accessKey, idx: idx};
-                                            $.ajax({
-                                                dataType: 'text',
-                                                url: '/index.php/dataFunction/smsAccessChk',
-                                                data: data,
-                                                type: 'POST',
-                                                success: function (data, status, xhr) {
-                                                    if (data == 'SUCCESS') {
-                                                        alert('인증 되었습니다.');
-                                                        $("#phone").attr('readonly', 'readonly');
-                                                        $('#phone_auth').attr('disabled', 'disabled');
-                                                        $("#phone_auth_send_btn").attr('disabled', 'disabled');
-                                                        $("#phone_auth_chk_btn").attr('disabled', 'disabled');
-                                                        $("#phone_auth_chk").val('Y');
-                                                        $("#phone_auth_send_btn").hide();
-                                                        $("#auth_area").hide();
-                                                        return false;
-                                                    }
-
-                                                    if (data == 'FAILED') {
-                                                        alert('인증번호가 일치하지 않습니다.');
-                                                        $("#phone_auth").val('');
-                                                        $("#phone_auth").focus();
-                                                        return false;
-                                                    }
-                                                }
-
-                                            });
-                                        }
-                                    });
-
-                                    $("#mypage_form").ajaxForm({
-                                        success: function (data) {
+                                if (!$.trim(phone)) {
+                                    alert("연락처를 입력해주세요.");
+                                    $("#phone").val('');
+                                } else {
+                                    var data = {phone: phone};
+                                    $.ajax({
+                                        dataType: 'text',
+                                        url: '/index.php/dataFunction/sendSms',
+                                        data: data,
+                                        type: 'POST',
+                                        success: function (data, status, xhr) {
                                             if (data == 'SUCCESS') {
-                                                alert("수정되었습니다.");
+                                                alert('인증번호가 전송 되었습니다.');
+                                                $("#phone").attr('readonly', 'readonly');
+                                                $('#phone_auth').focus();
+                                                return false;
+                                            }
+
+                                            if (data == 'DUPLE') {
+                                                alert('이미 인증된 번호입니다.');
+                                                $("#phone").val('');
                                                 return false;
                                             }
 
                                             if (data == 'FAILED') {
-                                                alert('데이터 처리오류!!');
+                                                alert('데이터 처리오류');
                                                 return false;
                                             }
                                         }
                                     });
+                                }
 
-                                    $(".delBoardBtn").click(function () {
-                                        if (confirm("정말 삭제하시겠습니까??") == true) {    //확인
-                                            $(this).parent().parent().parent().remove();
-                                            var data = {board_idx: $(this).val()};
-                                            $.ajax({
-                                                dataType: 'text',
-                                                url: '/index.php/dataFunction/delBoard',
-                                                data: data,
-                                                type: 'POST',
-                                                success: function (data, status, xhr) {
+                            });
+
+                            $("#phone_mod_btn").click(function () {
+                                $(this).attr('id', 'phone_auth_send_btn');
+                                $(this).html('인증번호 받기');
+                                $('#phone').attr('readonly', false);
+                                var html = '<label id="auth_area" class="align_custom_div">';
+                                html += '<h4><strong>인증번호</strong></h4>';
+                                html += '<div class="inline_input_div">';
+                                html += '<input class="input_w100" type="text" id="phone_auth" name="" placeholder="ex) 123234">';
+                                html += '<button type="button" id="phone_auth_chk_btn" class="underline_btn" style="margin:5px 0 15px 5px;">인증번호 확인</button>';
+                                html += '</div>';
+                                html += '</label>';
+
+                                $("#auth_container").html(html);
+                                $("#phone_auth_chk").val('N');
+
+                                $("#phone_auth_send_btn").click(function () {
+                                    var phone = $("#phone").val();
+
+                                    var regNumber = /^[0-9]*$/;
+
+                                    if (!regNumber.test(phone)) {
+                                        alert("연락처는 숫자만 입력 가능합니다.");
+                                        $("#phone").val('');
+                                        return false;
+                                    }
+
+                                    if (!$.trim(phone)) {
+                                        alert("연락처를 입력해주세요.");
+                                        $("#phone").val('');
+                                    } else {
+                                        var data = {phone: phone};
+                                        $.ajax({
+                                            dataType: 'text',
+                                            url: '/index.php/dataFunction/sendSms',
+                                            data: data,
+                                            type: 'POST',
+                                            success: function (data, status, xhr) {
+                                                if (data == 'SUCCESS') {
+                                                    alert('인증번호가 전송 되었습니다.');
+                                                    $("#phone").attr('readonly', 'readonly');
+                                                    $('#phone_auth').focus();
+                                                    return false;
+                                                }
+
+                                                if (data == 'DUPLE') {
+                                                    alert('이미 인증된 번호입니다.');
+                                                    $("#phone").val('');
+                                                    return false;
+                                                }
+
+                                                if (data == 'FAILED') {
+                                                    alert('데이터 처리오류');
+                                                    return false;
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+
+                                //인증문자 비교 처리
+                                $('#phone_auth_chk_btn').click(function () {
+                                    var phone = $("#phone").val();
+                                    var accessKey = $("#phone_auth").val();
+                                    var idx = $("#idx").val();
+
+                                    if (!accessKey) {
+                                        alert("인증번호를 입력해주세요.");
+                                        $("#phone_auth").focus();
+                                        return false;
+                                    }
+
+                                    if (!$.trim(phone)) {
+                                        alert("핸드폰 번호를 입력해주세요.");
+                                        return false;
+
+                                    } else {
+                                        var data = {phone: phone, accessKey: accessKey, idx: idx};
+                                        $.ajax({
+                                            dataType: 'text',
+                                            url: '/index.php/dataFunction/smsAccessChk',
+                                            data: data,
+                                            type: 'POST',
+                                            success: function (data, status, xhr) {
+                                                if (data == 'SUCCESS') {
+                                                    alert('인증 되었습니다.');
+                                                    $("#phone").attr('readonly', 'readonly');
+                                                    $('#phone_auth').attr('disabled', 'disabled');
+                                                    $("#phone_auth_send_btn").attr('disabled', 'disabled');
+                                                    $("#phone_auth_chk_btn").attr('disabled', 'disabled');
+                                                    $("#phone_auth_chk").val('Y');
+                                                    $("#phone_auth_send_btn").hide();
+                                                    $("#auth_area").hide();
+                                                    return false;
+                                                }
+
+                                                if (data == 'FAILED') {
+                                                    alert('인증번호가 일치하지 않습니다.');
+                                                    $("#phone_auth").val('');
+                                                    $("#phone_auth").focus();
+                                                    return false;
+                                                }
+                                            }
+
+                                        });
+                                    }
+                                });
+                            });
+
+                            //인증문자 비교 처리
+                            $('#phone_auth_chk_btn').click(function () {
+                                var phone = $("#phone").val();
+                                var accessKey = $("#phone_auth").val();
+                                var idx = $("#idx").val();
+
+                                if (!accessKey) {
+                                    alert("인증번호를 입력해주세요.");
+                                    $("#phone_auth").focus();
+                                    return false;
+                                }
+
+                                if (!$.trim(phone)) {
+                                    alert("핸드폰 번호를 입력해주세요.");
+                                    return false;
+
+                                } else {
+                                    var data = {phone: phone, accessKey: accessKey, idx: idx};
+                                    $.ajax({
+                                        dataType: 'text',
+                                        url: '/index.php/dataFunction/smsAccessChk',
+                                        data: data,
+                                        type: 'POST',
+                                        success: function (data, status, xhr) {
+                                            if (data == 'SUCCESS') {
+                                                alert('인증 되었습니다.');
+                                                $("#phone").attr('readonly', 'readonly');
+                                                $('#phone_auth').attr('disabled', 'disabled');
+                                                $("#phone_auth_send_btn").attr('disabled', 'disabled');
+                                                $("#phone_auth_chk_btn").attr('disabled', 'disabled');
+                                                $("#phone_auth_chk").val('Y');
+                                                $("#phone_auth_send_btn").hide();
+                                                $("#auth_area").hide();
+                                                return false;
+                                            }
+
+                                            if (data == 'FAILED') {
+                                                alert('인증번호가 일치하지 않습니다.');
+                                                $("#phone_auth").val('');
+                                                $("#phone_auth").focus();
+                                                return false;
+                                            }
+                                        }
+
+                                    });
+                                }
+                            });
+
+                            $("#mypage_form").ajaxForm({
+                                success: function (data) {
+                                    if (data == 'SUCCESS') {
+                                        alert("수정되었습니다.");
+                                        return false;
+                                    }
+
+                                    if (data == 'FAILED') {
+                                        alert('데이터 처리오류!!');
+                                        return false;
+                                    }
+                                }
+                            });
+
+                            $(".delBoardBtn").click(function () {
+                                if (confirm("정말 삭제하시겠습니까??") == true) {    //확인
+                                    $(this).parent().parent().parent().remove();
+                                    var data = {board_idx: $(this).val()};
+                                    $.ajax({
+                                        dataType: 'text',
+                                        url: '/index.php/dataFunction/delBoard',
+                                        data: data,
+                                        type: 'POST',
+                                        success: function (data, status, xhr) {
 //                                            if (data == 'SUCCESS') {
 //                                                alert("삭제 되었습니다.");
 //                                            }
 
-                                                    if (data == 'FAILED') {
-                                                        alert("데이터 처리오류!!");
-                                                        return false;
-                                                    }
-                                                }
-
-                                            });
-                                        } else {
-                                            return false;
+                                            if (data == 'FAILED') {
+                                                alert("데이터 처리오류!!");
+                                                return false;
+                                            }
                                         }
+
                                     });
-                                });
-
-                                function openWonList(board_idx) {
-                                    var data = {board_idx: board_idx};
-
-                                    $.ajax({
-                                        dataType: 'json',
-                                        url: '/index.php/dataFunction/wonList',
-                                        data: data,
-                                        type: 'POST',
-                                        success: function (data, status, xhr) {
-                                            if (data.RESULT === 'SUCCESS') {
-                                                $("#wonList" + board_idx).modal();
-                                                $("#wonListBtn" + board_idx).html(data.NAME);
-                                                $("#wonListCount" + board_idx).html(data.CNT + "명");
-                                                console.log(data);
-                                            } else {
-                                                console.log("실패");
-                                            }
-                                        }
-                                    });
+                                } else {
+                                    return false;
                                 }
+                            });
+                        });
 
-                                function compBtn(board_idx) {
-                                    var data = {board_idx: board_idx};
+                        function openWonList(board_idx) {
+                            var data = {board_idx: board_idx};
 
-                                    $.ajax({
-                                        dataType: 'text',
-                                        url: '/index.php/dataFunction/compBoard',
-                                        data: data,
-                                        type: 'POST',
-                                        success: function (data, status, xhr) {
-                                            if (data === 'SUCCESS') {
-                                                alert('베팅 참여자가 없습니다.');
-                                            } else {
-                                                console.log("실패");
-                                            }
-                                        }
-                                    });
+                            $.ajax({
+                                dataType: 'json',
+                                url: '/index.php/dataFunction/wonList',
+                                data: data,
+                                type: 'POST',
+                                success: function (data, status, xhr) {
+                                    if (data.RESULT === 'SUCCESS') {
+                                        $("#wonList" + board_idx).modal();
+                                        $("#wonListBtn" + board_idx).html(data.NAME);
+                                        $("#wonListCount" + board_idx).html(data.CNT + "명");
+                                        console.log(data);
+                                    } else {
+                                        console.log("실패");
+                                    }
                                 }
+                            });
+                        }
 
-                                function daumPostcode() {
-                                    new daum.Postcode({
-                                        oncomplete: function (data) {
-                                            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                        function compBtn(board_idx) {
+                            var data = {board_idx: board_idx};
 
-                                            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                                            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                                            var fullAddr = ''; // 최종 주소 변수
-                                            var extraAddr = ''; // 조합형 주소 변수
-
-                                            // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                                            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                                                fullAddr = data.roadAddress;
-
-                                            } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                                                fullAddr = data.jibunAddress;
-                                            }
-
-                                            // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
-                                            if (data.userSelectedType === 'R') {
-                                                //법정동명이 있을 경우 추가한다.
-                                                if (data.bname !== '') {
-                                                    extraAddr += data.bname;
-                                                }
-                                                // 건물명이 있을 경우 추가한다.
-                                                if (data.buildingName !== '') {
-                                                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                                                }
-                                                // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
-                                                fullAddr += (extraAddr !== '' ? ' (' + extraAddr + ')' : '');
-                                            }
-
-                                            // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                                            //document.getElementById('sample6_postcode').value = data.zonecode; //5자리 새우편번호 사용
-                                            document.getElementById('addr').value = fullAddr;
-
-                                            // 커서를 상세주소 필드로 이동한다.
-                                            document.getElementById('detail_addr').focus();
-                                        }
-                                    }).open();
+                            $.ajax({
+                                dataType: 'text',
+                                url: '/index.php/dataFunction/compBoard',
+                                data: data,
+                                type: 'POST',
+                                success: function (data, status, xhr) {
+                                    if (data === 'SUCCESS') {
+                                        alert('베팅 참여자가 없습니다.');
+                                    } else {
+                                        console.log("실패");
+                                    }
                                 }
+                            });
+                        }
+
+                        function daumPostcode() {
+                            new daum.Postcode({
+                                oncomplete: function (data) {
+                                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                                    // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                                    var fullAddr = ''; // 최종 주소 변수
+                                    var extraAddr = ''; // 조합형 주소 변수
+
+                                    // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                                        fullAddr = data.roadAddress;
+
+                                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                                        fullAddr = data.jibunAddress;
+                                    }
+
+                                    // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+                                    if (data.userSelectedType === 'R') {
+                                        //법정동명이 있을 경우 추가한다.
+                                        if (data.bname !== '') {
+                                            extraAddr += data.bname;
+                                        }
+                                        // 건물명이 있을 경우 추가한다.
+                                        if (data.buildingName !== '') {
+                                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                                        }
+                                        // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                                        fullAddr += (extraAddr !== '' ? ' (' + extraAddr + ')' : '');
+                                    }
+
+                                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                                    //document.getElementById('sample6_postcode').value = data.zonecode; //5자리 새우편번호 사용
+                                    document.getElementById('addr').value = fullAddr;
+
+                                    // 커서를 상세주소 필드로 이동한다.
+                                    document.getElementById('detail_addr').focus();
+                                }
+                            }).open();
+                        }
 </script>
 
 <script type="text/javascript">

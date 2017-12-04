@@ -572,8 +572,8 @@
                     $("#imgView").parent(".blocker").css({"background-color": "rgba(0,0,0,1)", "padding": "0"});
                 }, 0);
             }
-            
-            
+
+
             function openVideoView() {
                 $("#videoView").modal();
 
@@ -619,32 +619,50 @@
                                     });
 
                                     $(".result_modal_nav button").click(function () {
-                                        var idx = $(this).val().split('_');
-                                        var data = {type: idx[0], idx: idx[1], board_idx: board_idx};
+                                        if ($(this).attr('id') != 'none') {
+                                            var idx = $(this).val().split('_');
+                                            var data = {type: idx[0], idx: idx[1], board_idx: board_idx};
 
-                                        if (confirm("최종 결과값을 선택하시겠습니까?") === true) {
+                                            if (confirm("최종 결과값을 선택하시겠습니까?") === true) {
+                                                $.ajax({
+                                                    dataType: 'text',
+                                                    url: '/index.php/dataFunction/sendCupon',
+                                                    data: data,
+                                                    type: 'POST',
+                                                    success: function (data, status, xhr) {
+                                                        if (data == 'SUCCESS') {
+                                                            alert("옵션 발송 및 결과처리가 완료되었습니다.");
+                                                            $("#result").modal('hide');
+                                                            $(".cancle_btn").trigger("click");
+                                                            location.href = '/index/mypage/write';
+                                                        }
+
+                                                        if (data == 'FAILED') {
+                                                            alert("데이터 처리오류!!");
+                                                            return false;
+                                                        }
+                                                    }
+
+                                                });
+                                            } else {
+                                                return false;
+                                            }
+                                        } else if ($(this).attr('id') == 'none') {
+                                            var data = {board_idx: board_idx};
                                             $.ajax({
                                                 dataType: 'text',
-                                                url: '/index.php/dataFunction/sendCupon',
+                                                url: '/index.php/dataFunction/compBoard',
                                                 data: data,
                                                 type: 'POST',
                                                 success: function (data, status, xhr) {
-                                                    if (data == 'SUCCESS') {
-                                                        alert("옵션 발송 및 결과처리가 완료되었습니다.");
-                                                        $("#result").modal('hide');
-                                                        $(".cancle_btn").trigger("click");
+                                                    if (data === 'SUCCESS') {
+                                                        alert('당첨자없음 처리 되었습니다.');
                                                         location.href = '/index/mypage/write';
-                                                    }
-
-                                                    if (data == 'FAILED') {
-                                                        alert("데이터 처리오류!!");
-                                                        return false;
+                                                    } else {
+                                                        console.log("실패");
                                                     }
                                                 }
-
                                             });
-                                        } else {
-                                            return false;
                                         }
                                     });
 

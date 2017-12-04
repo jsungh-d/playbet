@@ -450,7 +450,7 @@ class Index extends CI_Controller {
                               WHERE 
                                 II.BOARD_IDX = B.BOARD_IDX AND
                                 B.MEMBER_IDX = '" . $this->session->userdata('MEMBER_IDX') . "' AND
-                                DATE(II.CUPON_SEND_TIME) >= DATE(SUBDATE(NOW(), INTERVAL 25 DAY)) AND 
+                                DATE(II.CUPON_SEND_TIME) >= DATE(SUBDATE(NOW(), INTERVAL 7 DAY)) AND 
                                 DATE(II.CUPON_SEND_TIME) <= DATE(NOW())";
 
         $cupon_send_cnt = $this->Db_m->getInfo($cupon_send_cnt_sql, 'PLAYBAT');
@@ -481,7 +481,7 @@ class Index extends CI_Controller {
             //     exit;
             // }
             if($cupon_send_cnt->CNT >0) {
-                alert('무료회원은 결과 입력 후 25일후 작성 가능합니다.', '/index/premium');
+                alert('무료회원은 결과 입력 후 7일후 작성 가능합니다.', '/index/premium');
                 exit;   
             }
             if ($board_cnt->CNT > 0) {
@@ -590,6 +590,25 @@ class Index extends CI_Controller {
                             WHERE 
                                 II.ITEM_IDX = I.ITEM_IDX
                         ) CNT,
+                        (
+                            SELECT 
+                                COUNT(*) CNT 
+                            FROM 
+                                ITEM_INFO II, BOARD B 
+                            WHERE 
+                                II.BOARD_IDX = B.BOARD_IDX AND
+                                II.ITEM_IDX = I.ITEM_IDX AND
+                                B.COMP_YN = 'Y' AND
+                                II.CUPON_RECEPTION = 'Y'
+                        ) COMP_CNT,
+                        (
+                            SELECT 
+                                B.COMP_YN
+                            FROM 
+                                BOARD B 
+                            WHERE 
+                                I.BOARD_IDX = B.BOARD_IDX
+                        ) COMP_YN,
                         CASE WHEN 
                               (
                                 SELECT 

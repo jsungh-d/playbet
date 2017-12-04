@@ -76,6 +76,10 @@
                         $myClass = '';
                     }
 
+                    if ($subRow['COMP_CNT'] == '0' && count(${'item_lists' . $row['BOARD_IDX']}) == 1 && $subRow['COMP_YN'] == 'Y') {
+                        $myClass = 'none_select_btn';
+                    }
+
 //                echo $subRow['MY_CHK'];
                     ?>
 

@@ -382,6 +382,25 @@ class DataFunction extends CI_Controller {
                                 WHERE 
                                     II.ITEM_IDX = I.ITEM_IDX
                             ) CNT,
+                            (
+                                SELECT 
+                                    COUNT(*) CNT 
+                                FROM 
+                                    ITEM_INFO II, BOARD B 
+                                WHERE 
+                                    II.BOARD_IDX = B.BOARD_IDX AND
+                                    II.ITEM_IDX = I.ITEM_IDX AND
+                                    B.COMP_YN = 'Y' AND
+                                    II.CUPON_RECEPTION = 'Y'
+                            ) COMP_CNT,
+                            (
+                                SELECT 
+                                    B.COMP_YN
+                                FROM 
+                                    BOARD B 
+                                WHERE 
+                                    I.BOARD_IDX = B.BOARD_IDX
+                            ) COMP_YN,
                             CASE WHEN 
                               (
                                 SELECT 
@@ -1283,6 +1302,7 @@ class DataFunction extends CI_Controller {
         $sql = "SELECT
                     I.ITEM_IDX, 
                     I.NAME,
+                    I.BOARD_IDX,
                     (
                         SELECT 
                             COUNT(*) CNT 
@@ -1328,7 +1348,9 @@ class DataFunction extends CI_Controller {
                 } else {
                     $class = "darkblue_btn";
                 }
+
                 $data .= '<button id="' . $row['ITEM_IDX'] . '" class="color_btn ' . $class . '" value="item_' . $row['ITEM_IDX'] . '"><h5><strong>' . $row['NAME'] . ' ' . number_format($row['CNT']) . '</strong></h5></button>';
+                $data .= '<button id="none" class="color_btn darkblue_btn" value="' . $row['BOARD_IDX'] . '"><h5><strong>당첨자없음</strong></h5></button>';
                 $i++;
             }
         }
@@ -2016,7 +2038,7 @@ class DataFunction extends CI_Controller {
                 <TR>
                     <TD>일련번호</TD>
                     <TD>회원명</TD>
-                    <TD>쿠폰번호</TD>
+                    <TD>옵션번호</TD>
                 </TR>";
         $date = 'mso-number-format:"yyyy-mm-dd"'; //다운로드 서식 날짜 변환
         $number = 'mso-number-format:"\@";'; //다운로드 서식 숫자로 인식시키기

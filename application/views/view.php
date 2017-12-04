@@ -8,7 +8,7 @@
                 <?= $info->BUSINESS_NAME ?> 
                 > 
                 <?php if ($info->CATEGORY_TYPE == 'AREA') { ?>
-                    <a onclick="locationSearch('<?= $info->SIGUNGU ?>');"><?= $info->LOCATION ?></a>
+                    <a onclick="locationSearchArea('<?= $info->SIGUNGU ?>');"><?= $info->LOCATION ?></a>
                 <?php } else { ?>
                     <!--<a onclick="subCategorySearch('<?= $info->CATEGORY_IDX ?>', '<?= $info->CATEGORY_PNUM ?>');"><?= $info->CATEGORY_TYPE ?></a>-->
                     <a onclick="locationSearch('<?= $info->CATEGORY_TYPE ?>');"><?= $info->CATEGORY_TYPE ?></a>
@@ -63,6 +63,10 @@
                         $myClass = ' ';
                         // $color = 'default_btn';
                     }
+
+                    if ($subRow['COMP_CNT'] == '0' && count($item_lists) == 1 && $subRow['COMP_YN'] == 'Y') {
+                        $myClass = 'none_select_btn';
+                    }
                     ?>
                     <a class="betting_modal <?= $color ?> color_btn <?= $myClass ?>" onclick="openBetting('<?= $subRow['NAME'] ?>', '<?= $info->TITLE ?>', '<?= $info->BOARD_IDX ?>', '<?= $subRow['ITEM_IDX'] ?>', '<?= $this->session->userdata('MEMBER_IDX') ?>', '<?= $info->MEMBER_IDX ?>', '<?= $diff->invert ?>');">
                         <button type="button" class="<?= $color ?> color_btn"><h3><b class="btn_text"><?= $subRow['NAME'] ?></b>  &nbsp;<strong><?= number_format($subRow['CNT']) ?></strong></h3></button>
@@ -114,6 +118,17 @@
                                         <img src="<?= $row['LOCATION'] ?>">
                                     </div>
                                 <?php } ?>
+                                <?php if ($info->VIDEO) { ?>
+                                    <div class="swiper-slide click_swiper_btn">
+                                        <div class="video_area video_area_page">
+                                            <video class="main_video" width="100%" id="video1">
+                                                <source src="<?= $info->VIDEO ?>"/>
+                                            </video>
+                                            <img class="video_view_img" src="/images/common/view_icon_play.png" alt="동영상 보기">
+                                            <div class="overlay_black" ></div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                             </div>
                             <div class="swiper-pagination view_swiper-pagination"></div>
 
@@ -125,16 +140,16 @@
 
                 <!-- 이미지 슬라이드 -->
                 <?php if ($info->VIDEO) { ?>
-                    <label class="align_custom_div">
-                        <h4><strong>첨부 영상</strong></h4>
-                        <div class="video_area video_area_page" onclick="openVideoView();">
-                            <video class="main_video" width="100%">
-                                <source src="<?= $info->VIDEO ?>" type="video/mp4"/>
-                            </video>
-                            <img class="video_modal_btn" src="/images/common/icon_play.png" alt="동영상 보기">
-                            <!--<div class="overlay_black" ></div>-->
-                        </div>
-                    </label>
+                    <!--                    <label class="align_custom_div">
+                                            <h4><strong>첨부 영상</strong></h4>
+                                            <div class="video_area video_area_page" onclick="openVideoView();">
+                                                <video class="main_video" width="100%">
+                                                    <source src="<?= $info->VIDEO ?>" type="video/mp4"/>
+                                                </video>
+                                                <img class="video_modal_btn" src="/images/common/icon_play.png" alt="동영상 보기">
+                                                <div class="overlay_black" ></div>
+                                            </div>
+                                        </label>-->
                 <?php } ?>
 
                 <label class="align_custom_div scroll_target">
@@ -173,7 +188,7 @@
                 <label class="align_custom_div">
                     <h4><strong>웹페이지 주소</strong></h4>
                     <div class="inline_input_div">
-                        <h5><a href="http://<?= $info->HOME_PAGE ?>"><?= $info->HOME_PAGE ?></a></h5>
+                        <h5><a href="<?= $info->HOME_PAGE ?>"><?= $info->HOME_PAGE ?></a></h5>
                     </div>
                 </label>
             </div>
@@ -297,7 +312,7 @@
                             <div class="comment_input pt15">
                                 <div class="comment_input_wrapper pl15">
                                     <form method="post" onsubmit="commentChk(this);
-                                                return false;" action="/index.php/dataFunction/insComment">
+                                            return false;" action="/index.php/dataFunction/insComment">
                                         <input type="hidden" name="member_idx" value="<?= $this->session->userdata('MEMBER_IDX'); ?>">
                                         <input type="hidden" name="board_idx" value="<?= $info->BOARD_IDX ?>">
                                         <input type="hidden" name="title" value="<?= $info->TITLE ?>">
@@ -366,6 +381,19 @@
                     </div>
                 </div>
             <?php } ?>
+            <?php if ($info->VIDEO) { ?>
+                <div class="swiper-slide" style=" height:100%; width:100%;">
+                    <div class="va_container">
+                        <div class="va_row" style="-webkit-vertical-align:middle;">
+                            <div class="video_area" style="padding:20px 0;">
+                                <video class="main_video" width="100%" height="auto" controls>
+                                    <source src="<?= $info->VIDEO ?>" type="video/mp4"/>
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
         </div>
         <div class="swiper-pagination modal_swiper-pagination"></div>
 
@@ -381,7 +409,7 @@
 
 
 <!-- 비디오 뷰 모달 -->
-<div id="videoView" class="align_c playbet_modal" style="display:none; height:100%">
+<!--<div id="videoView" class="align_c playbet_modal" style="display:none; height:100%">
     <img src="/images/common/left-arrow.png" alt="" class="cancle_btn">
     <div class="va_container">
         <div class="va_row">
@@ -392,7 +420,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
 
 <script type="text/javascript">
@@ -401,6 +429,17 @@
         if (getParameters('scroll')) {
             $('html, body').animate({scrollTop: $(".scroll_target").offset().top - $(window).height() - 10}, 10);
         }
+
+//        var myVideo = document.getElementById("video1");
+//
+//        var isPlaying = myVideo.currentTime > 0 && !myVideo.paused && !myVideo.ended
+//                && myVideo.readyState > 2;
+//        if (!isPlaying) {
+//            myVideo.play();
+//        }
+//        if (isPlaying) {
+//            myVideo.pause();
+//        }
 
         $(".click_swiper_btn").click(function () {
             openImgView($(this).index());

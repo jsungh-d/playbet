@@ -1135,3 +1135,12 @@
     max-height: 250px;
     overflow:hidden;
 }
+
+.video_view_img {
+    position:absolute;
+    height:40px;
+    width:40px !important;
+    top:80px;
+    left:50%;
+    margin-left: -20px;
+}
